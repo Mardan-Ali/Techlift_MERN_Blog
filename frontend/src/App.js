@@ -1,28 +1,37 @@
-import React from "react";
-import Topbar from "./components/Topbar";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Setting from "./pages/Setting";
-import Single from "./pages/Single";
-import Write from "./pages/Write";
+import Navbar from "./components/Navbar";
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "../node_modules/bootstrap/dist/js/bootstrap.bundle.js";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Technology from "./pages/Technology";
+import News from "./pages/News";
+import Sports from "./pages/Sports";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import Footer from "./components/footer";
+import Contact from "./pages/Contact";
+
+
 function App() {
-  const user = false;
   return (
     <div>
       <BrowserRouter>
-        <Topbar />
+      <Navbar />
+
         <Routes>
-          <Route path="/" element={<Home />} />
-          {/* <Route path="/about" /> */}
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/write" element={<Write />} />
-          <Route path="/setting" element={<Setting />} />
-          <Route path="/post/:post" element={<Single />} />
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/about" element={<About />}></Route>
+          <Route path="/news" element={<News />}></Route>
+          <Route path="/sports" element={<Sports />}></Route>
+          <Route path="/technology" element={<Technology />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/signup" element={<Signup />}></Route>
+          <Route path="/contact" element={<Contact />}></Route>
         </Routes>
+        <Footer />
       </BrowserRouter>
+      
     </div>
   );
 }
