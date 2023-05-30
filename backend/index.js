@@ -6,12 +6,13 @@ const userRoute = require("./routes/users");
 const postRoute = require("./routes/posts");
 const CateRoute = require("./routes/categories");
 const multer = require("multer");
-
+const cors = require("cors");
 dotenv.config();
 const app = express();
 
 // MiddleWare
 app.use(express.json());
+app.use(cors());
 
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);

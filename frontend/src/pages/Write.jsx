@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import "./write.css";
 export default function Write() {
+  // States
+  const [title, setTitle] = useState("");
+  const [desc, setDesc] = useState("");
+  const [file, setFile] = useState(null);
   return (
     <div className="write">
       <img
