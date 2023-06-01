@@ -12,13 +12,16 @@ import Signup from "./pages/Signup";
 import Footer from "./components/footer";
 import Contact from "./pages/Contact";
 import Blogpost from "./pages/Blogpost";
-
+import CreateBlog from "./pages/CreateBlog";
+import Edit from "./pages/Edit";
+import Admin from "./pages/Admin";
+import MyBlog from "./pages/MyBlog";
 
 function App() {
   return (
     <div>
       <BrowserRouter>
-      <Navbar />
+        <Navbar />
 
         <Routes>
           <Route path="/" element={<Home />}></Route>
@@ -29,12 +32,15 @@ function App() {
           <Route path="/login" element={<Login />}></Route>
           <Route path="/signup" element={<Signup />}></Route>
           <Route path="/contact" element={<Contact />}></Route>
+          <Route path="/create" element={<CreateBlog />}></Route>
+          <Route path="/edit" element={<Edit />}></Route>
+          <Route path="/admin" element={<Admin />}></Route>
+          <Route path="/myblog" element={<MyBlog />}></Route>
           <Route path="/post" element={<Blogpost />}></Route>
         </Routes>
-        
+
         <Footer />
       </BrowserRouter>
-      
     </div>
   );
 }
