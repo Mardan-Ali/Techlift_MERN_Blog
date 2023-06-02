@@ -1,14 +1,16 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 export default function () {
-  const [resultPost, setPost] = useState([]);
-
+  const [resultPost, setPost] = useState({});
+  const id = useParams().id;
   useEffect(() => {
     axios
-      .get("https://jsonplaceholder.typicode.com/posts")
+      .get(`http://127.0.0.1:5000/blog/get-blog/${id}`)
       .then((resolve) => {
-        setPost(resolve.data);
+        console.log(resolve.data.blog);
+        setPost(resolve.data.blog);
       })
       .catch((error) => {
         console.log(error.message);
@@ -20,29 +22,15 @@ export default function () {
       className="bg-dark text-light container mt-3 "
       style={{ marginBottom: "500px" }}
     >
-      {resultPost
-        .filter((val) => val.id === 1)
-        .map((val) => {
-          return (
-            <div className="container p-4">
-              <img
-                src="https://images.pexels.com/photos/768474/pexels-photo-768474.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                className="img-fluid"
-                
-                alt=""
-              />
-              <h2>Blog Title: {val.title}</h2>
-              <hr />
-              <p>
-                {val.body} Lorem ipsum dolor sit amet consectetur adipisicing
-                elit. Nam earum id eius iure consectetur voluptatem doloremque
-                corrupti adipisci incidunt voluptatibus eum quo, cupiditate
-                dolores mollitia consequatur! Aliquam officiis provident
-                quibusdam.
-              </p>
-            </div>
-          );
-        })}
+      <div className="container p-4">
+        <img src={resultPost.image} className="img-fluid" alt="" />
+        <h2>Blog Title: {resultPost.title}</h2>
+        <h5>Category : {resultPost.cat} </h5>
+        {/* <h5>Author : {resultPost.user.username}</h5> */}
+
+        <hr />
+        <p>{resultPost.description}</p>
+      </div>
     </div>
   );
 }

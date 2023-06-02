@@ -1,8 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+
 export default function Edit() {
+  const navigate = useNavigate();
+  // const [resultPost, setPost] = useState({});
+  const id = useParams().id;
   const [inputs, setInput] = useState({
     title: "",
     cat: "",
@@ -12,27 +16,38 @@ export default function Edit() {
 
   useEffect(() => {
     axios
-      .get("https://jsonplaceholder.typicode.com/posts")
+      .get(`http://127.0.0.1:5000/blog/get-blog/${id}`)
       .then((resolve) => {
-        let result = resolve.data.find((val) => val.id == 1);
-        setInput({
-          title: result.title,
-          cat: "sports",
-          description: result.body,
-          image: result.id,
-        });
+        console.log(resolve.data.blog);
+        setInput(resolve.data.blog);
       })
       .catch((error) => {
         console.log(error.message);
       });
   }, []);
-  console.log(inputs);
+
   const changeHandler = (e) => {
     setInput({ ...inputs, [e.target.name]: e.target.value });
   };
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    console.log("a");
+    try {
+      const { data } = await axios.put(
+        `http://127.0.0.1:5000/blog/update-blog/${id}`,
+        {
+          title: inputs.title,
+          cat: inputs.cat,
+          description: inputs.description,
+          image: inputs.image,
+        }
+      );
+      if (data.success) {
+        alert("Blog Updated");
+        navigate("/myblog");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <>
@@ -70,9 +85,9 @@ export default function Edit() {
                   onChange={changeHandler}
                 >
                   <option value={""}>Slect one option</option>
-                  <option value={"news"}>News</option>
-                  <option value={"sports"}>Sports</option>
-                  <option value={"technology"}>Technology</option>
+                  <option value={"News"}>News</option>
+                  <option value={"Sports"}>Sports</option>
+                  <option value={"Technology"}>Technology</option>
                 </select>
               </div>
               <div className="mb-4">

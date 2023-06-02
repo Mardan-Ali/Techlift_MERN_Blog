@@ -1,8 +1,24 @@
 import React from "react";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "../redux/Store";
 
 export default function Navbar() {
+  const isLogin = useSelector((state) => state.isLogin);
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
+
+  function logoutHandler(){
+try {
+  dispatch(authActions.logout());
+  alert("Logged out");
+  navigate("/login")
+} catch (error) {
+   console.log(error);
+}    
+
+  }
   return (
     <div>
       <nav className="navbar navbar-expand-lg bg-body-tertiary  bg-dark  ">
@@ -53,11 +69,13 @@ export default function Navbar() {
                 </Link>
               </li>
 
-              <li className="nav-item">
-                <Link to="/admin" className="nav-link text-light">
-                  Admin Page
-                </Link>
-              </li>
+              {isLogin && (
+                <li className="nav-item">
+                  <Link to="/admin" className="nav-link text-light">
+                    Admin Page
+                  </Link>
+                </li>
+              )}
               <li className="nav-item">
                 <Link to="/contact" className="nav-link text-light">
                   Contact Us
@@ -65,11 +83,20 @@ export default function Navbar() {
               </li>
             </ul>
             <ul className="d-flex navbar-nav  mb-2 mb-lg-0">
-              <li className="nav-item me-2 mb-md-2">
-                <Link to="/login" className="btn btn-outline-success">
-                  Sign In
-                </Link>
-              </li>
+              {!isLogin && (
+                <li className="nav-item me-2 mb-md-2">
+                  <Link to="/login" className="btn btn-outline-success">
+                    Sign In
+                  </Link>
+                </li>
+              )}
+              {isLogin && (
+                <li className="nav-item me-2 mb-md-2">
+                  <button  className="btn btn-outline-success" onClick={logoutHandler}>
+                    Log Out
+                  </button>
+                </li>
+              )}
               <li className="nav-item">
                 <Link to="/signup" className="btn btn-outline-success">
                   Sign Up

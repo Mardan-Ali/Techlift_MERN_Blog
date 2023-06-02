@@ -33,10 +33,10 @@ function App() {
           <Route path="/signup" element={<Signup />}></Route>
           <Route path="/contact" element={<Contact />}></Route>
           <Route path="/create" element={<CreateBlog />}></Route>
-          <Route path="/edit" element={<Edit />}></Route>
+          <Route path="/edit/:id" element={<Edit />}></Route>
           <Route path="/admin" element={<Admin />}></Route>
           <Route path="/myblog" element={<MyBlog />}></Route>
-          <Route path="/post" element={<Blogpost />}></Route>
+          <Route path="/post/:id" element={<Blogpost />}></Route>
         </Routes>
 
         <Footer />

@@ -25,7 +25,7 @@ export default function Admin() {
             <button
               className="btn btn-dark"
               onClick={() => {
-                navigate("/edit");
+                navigate("/myblog");
               }}
             >
               Update Blog

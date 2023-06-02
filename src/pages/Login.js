@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { authActions } from "../redux/Store";
 
 export default function Login() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [inputs, setInput] = useState({
     email: "",
     password: "",
@@ -15,11 +19,23 @@ export default function Login() {
       };
     });
   };
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(inputs);
-
-    navigate("/");
+    try {
+      const { data } = await axios.post("http://127.0.0.1:5000/user/login", {
+        username: inputs.username,
+        email: inputs.email,
+        password: inputs.password,
+      });
+      if (data.success) {
+        localStorage.setItem("userId", data.user._id);
+        dispatch(authActions.login());
+        alert("User Logged In Successfully");
+        navigate("/admin");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div className="container   ">

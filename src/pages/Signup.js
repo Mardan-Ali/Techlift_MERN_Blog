@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -16,11 +17,21 @@ export default function Signup() {
       };
     });
   };
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(inputs);
-
-    navigate("/");
+    try {
+      const { data } = await axios.post("http://127.0.0.1:5000/user/register", {
+        username: inputs.username,
+        email: inputs.email,
+        password: inputs.password,
+      });
+      if (data.success) {
+        alert("User Regestered");
+        navigate("/login");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div className="container   ">

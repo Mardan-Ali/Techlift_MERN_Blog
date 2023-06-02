@@ -1,7 +1,9 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 export default function CreateBlog() {
-    const navigate = useNavigate();
+  const id = localStorage.getItem("userId");
+  const navigate = useNavigate();
   const [inputs, setInput] = useState({
     title: "",
     cat: "",
@@ -16,11 +18,26 @@ export default function CreateBlog() {
       };
     });
   };
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(inputs);
-    alert("Blog Created");
-    navigate("/")
+    try {
+      const { data } = await axios.post(
+        "http://127.0.0.1:5000/blog/create-blog",
+        {
+          title: inputs.title,
+          cat: inputs.cat,
+          description: inputs.description,
+          image: inputs.image,
+          user: id,
+        }
+      );
+      if (data.success) {
+        alert("Blog Created");
+        navigate("/myblog");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -58,9 +75,9 @@ export default function CreateBlog() {
                 onChange={changeHandler}
               >
                 <option value={""}>Slect one option</option>
-                <option value={"news"}>News</option>
-                <option value={"sports"}>Sports</option>
-                <option value={"technology"}>Technology</option>
+                <option value={"News"}>News</option>
+                <option value={"Sports"}>Sports</option>
+                <option value={"Technology"}>Technology</option>
               </select>
             </div>
             <div className="mb-4">
